@@ -25,14 +25,6 @@ public class FileServiceImpl implements FileService {
         return mainNode;
     }
 
-    /*
-    Сохранение ноды в БД и возвращение Id
-     */
-    @Override
-    public Long getIdFromFile(MultipartFile file) {
-        return null;
-    }
-
     private File convertFile(MultipartFile file) {
         File convertFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
         try (FileOutputStream fileOutputStream = new FileOutputStream(convertFile)) {
@@ -87,7 +79,7 @@ public class FileServiceImpl implements FileService {
             if (currentNode.getSubChapters() == null) {
                 Node newNode = new Node(line, currentNode, null, null);
                 newNode.setLevel(level);
-                List<Node> subChapters= new ArrayList<>();
+                List<Node> subChapters = new ArrayList<>();
                 subChapters.add(newNode);
                 currentNode.setSubChapters(subChapters);
                 return newNode;
@@ -100,13 +92,13 @@ public class FileServiceImpl implements FileService {
         }
         if (currentNode.getLevel() > level) {
             Node prevNode = currentNode.getPrev();
-            while (!Objects.equals(prevNode.getLevel()+1, level)) {
+            while (!Objects.equals(prevNode.getLevel() + 1, level)) {
                 prevNode = prevNode.getPrev();
             }
             if (prevNode.getSubChapters() == null) {
                 Node newNode = new Node(line, prevNode, null, null);
                 newNode.setLevel(level);
-                List<Node> subChapters= new ArrayList<>();
+                List<Node> subChapters = new ArrayList<>();
                 subChapters.add(newNode);
                 prevNode.setSubChapters(subChapters);
                 return newNode;

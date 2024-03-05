@@ -1,12 +1,7 @@
 package com.example.testfilereader.model;
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
 
-@AllArgsConstructor
-@RequiredArgsConstructor
 public class Node {
 
     private Long id;
