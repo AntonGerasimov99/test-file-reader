@@ -1,8 +1,15 @@
 package com.example.testfilereader.model;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
 
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class Node {
+
+    private Long id;
 
     /*
     Название главы (#Имя)
@@ -15,7 +22,7 @@ public class Node {
     private List<String> textInChapter;
 
     /*
-    Нода следующего раздела, которая хранит информацию о следующих
+    Ноды следующих разделов, которые хранят информацию о следующих
      */
     private List<Node> subChapters;
 

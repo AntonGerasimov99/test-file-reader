@@ -134,45 +134,4 @@ public class FileServiceImpl implements FileService {
         }
         return level;
     }
-
-    /*
-    private Node convertFileToNode(File file) {
-        Node mainNode = new Node(null, null, null);
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            List<String> fileLines = reader.lines().toList();
-            List<String> newList = new ArrayList<>();
-            newList.add(fileLines.get(0));
-            mainNode.setTextInChapter(newList);
-            mainNode.setLevel(0);
-            for (String line : fileLines.subList(1, fileLines.size())) {
-                Integer level = getLevel(line);
-                saveNodeInMain(mainNode, line, level);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        log.info("File convert to Node successful");
-        return mainNode;
-    }
-
-    private void saveNodeInMain(Node mainNode, String line, Integer level) {
-        if (!Objects.equals(mainNode.getLevel(), level)) {
-            if (mainNode.getSubChapters() != null) {
-                saveNodeInMain(mainNode.getSubChapters(), line, level);
-            } else {
-                List<String> list = new ArrayList<>();
-                list.add(line);
-                Node newNode = new Node(mainNode, list, null);
-                newNode.setLevel(level);
-            }
-        }
-        if (mainNode.getTextInChapter() == null) {
-            List<String> list = new ArrayList<>();
-            list.add(line);
-            mainNode.setTextInChapter(list);
-        } else {
-            mainNode.getTextInChapter().add(line);
-        }
-    }
-     */
 }
