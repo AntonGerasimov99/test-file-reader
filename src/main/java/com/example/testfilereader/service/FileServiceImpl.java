@@ -1,8 +1,13 @@
 package com.example.testfilereader.service;
 
+import com.example.testfilereader.exception.NotFoundElementException;
+import com.example.testfilereader.model.FileDb;
 import com.example.testfilereader.model.Node;
+import com.example.testfilereader.repository.FileDbRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -14,6 +19,9 @@ import java.util.Objects;
 @Slf4j
 public class FileServiceImpl implements FileService {
 
+    @Autowired
+    private FileDbRepository fileDbRepository;
+
     /*
     Получение структурированной ноды
      */
@@ -23,6 +31,43 @@ public class FileServiceImpl implements FileService {
         Node mainNode = convertFileToNode(convertFile);
         log.info("getNodesFromFile in FileService successful");
         return mainNode;
+    }
+
+    /*
+    Сохранение ноды в БД и возвращение Id
+     */
+    @Override
+    public Long getIdFromFile(MultipartFile file) {
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+        FileDb fileDb = null;
+        try {
+            fileDb = new FileDb(fileName, file.getContentType(), file.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return fileDbRepository.save(fileDb).getId();
+    }
+
+    @Override
+    public Node getNodeById(Long id) {
+        FileDb fileDb = fileDbRepository.findById(id)
+                .orElseThrow(() -> new NotFoundElementException("File with id " + id + " not found"));
+        File file = convertFileDbInFile(fileDb);
+        Node mainNode = convertFileToNode(file);
+        log.info("getNodeById in FileService successful");
+        return mainNode;
+
+    }
+
+    private File convertFileDbInFile(FileDb fileDb) {
+        File convertFile = new File(Objects.requireNonNull(fileDb.getName()));
+        try (FileOutputStream fileOutputStream = new FileOutputStream(convertFile)) {
+            fileOutputStream.write(fileDb.getData());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return convertFile;
     }
 
     private File convertFile(MultipartFile file) {

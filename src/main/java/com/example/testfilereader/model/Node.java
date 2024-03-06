@@ -1,5 +1,7 @@
 package com.example.testfilereader.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 public class Node {
@@ -24,11 +26,13 @@ public class Node {
     /*
     Нода предыдущего раздела, которая хранит информацию о вышестоящих разделах
      */
+    @JsonIgnore
     private Node prev;
 
     /*
     Обозначение уровня раздела
     */
+    @JsonIgnore
     private Integer level;
 
     public List<String> getTextInChapter() {

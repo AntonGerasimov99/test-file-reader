@@ -7,4 +7,7 @@ public interface FileService {
 
     Node getNodesFromFile(MultipartFile file);
 
+    Long getIdFromFile(MultipartFile file);
+
+    Node getNodeById(Long id);
 }
