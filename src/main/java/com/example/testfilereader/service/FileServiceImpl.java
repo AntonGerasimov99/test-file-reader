@@ -60,6 +60,9 @@ public class FileServiceImpl implements FileService {
 
     }
 
+    /*
+    Конвертирование файла из формата в БД в удобный формат для чтения
+     */
     private File convertFileDbInFile(FileDb fileDb) {
         File convertFile = new File(Objects.requireNonNull(fileDb.getName()));
         try (FileOutputStream fileOutputStream = new FileOutputStream(convertFile)) {
@@ -70,6 +73,9 @@ public class FileServiceImpl implements FileService {
         return convertFile;
     }
 
+    /*
+    Конвертирование файла из мультипартфайла в удобный формат для чтения
+     */
     private File convertFile(MultipartFile file) {
         File convertFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
         try (FileOutputStream fileOutputStream = new FileOutputStream(convertFile)) {

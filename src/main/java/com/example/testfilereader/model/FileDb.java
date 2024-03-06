@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+/*
+Формат сохранения файла в БД
+ */
 @Entity
 @Getter
 @Setter

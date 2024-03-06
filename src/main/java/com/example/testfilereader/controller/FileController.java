@@ -16,18 +16,27 @@ public class FileController {
 
     private final FileService service;
 
+    /*
+    Обращение на конвертацию файла в Ноду без сохранения в БД
+     */
     @PostMapping
     public Node get(@RequestParam("file") MultipartFile file) {
         log.info("Received request to get Node file");
         return service.getNodesFromFile(file);
     }
 
+    /*
+    Сохранение файла в БД и возвращение Id
+     */
     @PostMapping("/save")
     public Long save(@RequestParam("file") MultipartFile file) {
         log.info("Received request to save file");
         return service.getIdFromFile(file);
     }
 
+    /*
+    Получение файла из БД по Id и конвертация в ноду
+     */
     @GetMapping("/{id}")
     public Node get(@PathVariable Long id) {
         log.info("Received request to get Node");
